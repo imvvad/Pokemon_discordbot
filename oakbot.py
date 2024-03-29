@@ -40,7 +40,7 @@ class PokemonNameModal(Modal):
         if info:
             print(f"検索対象： {pokemon_name} \n検索結果： {info}")
             await interaction.response.send_message(
-                f"検索対象： {pokemon_name} \n検索結果： \n{info}"
+                f"検索対象： {pokemon_name} \n検索結果：{info}"
             )
         else:
             print(f"pokemon not found.")
@@ -62,14 +62,16 @@ def find_pokemon_info(pokemon_name):
     refined_pokemon_info = ""
     for key, value in pokemon_info.items():
         if pokemon_name.lower() in key.lower():          
-            refined_pokemon_info += f"{key}: {value}"
+            refined_pokemon_info += f"{value}"
+            print(f"added {value}")
             # refined_pokemon_info = '\n'.join(refined_pokemon_info, f"{key}: {value}")
     if refined_pokemon_info:
-        refined_pokemon_info = refined_pokemon_info.replace(', ','\n').replace('{','\n').replace('}','')
-        print(f"refined output : {refined_pokemon_info}")
+        refined_pokemon_info = refined_pokemon_info.replace(', ','\n').replace('{','\n').replace('}','').replace('\'','').replace('Name:','【ポケモン名】\n').replace('テラスタイプ:','【テラスタイプ】\n').replace('対戦時限定技:','【当レイド限定】\n').replace('技:','【技】\n').replace('特性:','【特性】\n').replace('難易度:','【難易度】\n')
+        # print(f"refined output : {refined_pokemon_info}")
         return refined_pokemon_info
     else:
         return None
+
 
 intents = discord.Intents.default()
 intents.message_content = True
