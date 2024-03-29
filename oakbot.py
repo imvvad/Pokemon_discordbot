@@ -1,7 +1,6 @@
 import os
 import csv
 import discord
-import pandas as pd
 from discord.ui import Select, Modal, InputText
 from discord.ext import commands
 
@@ -57,21 +56,26 @@ class PokemonNameModal(Modal):
     #     else:
     #         await interaction.response.send_message(f'Pokemon not found.')
 
-
 def find_pokemon_info(pokemon_name):
     refined_pokemon_info = ""
     for key, value in pokemon_info.items():
         if pokemon_name.lower() in key.lower():          
             refined_pokemon_info += f"{value}"
-            print(f"added {value}")
-            # refined_pokemon_info = '\n'.join(refined_pokemon_info, f"{key}: {value}")
-    if refined_pokemon_info:
-        refined_pokemon_info = refined_pokemon_info.replace(', ','\n').replace('{','\n').replace('}','').replace('\'','').replace('Name:','【ポケモン名】\n').replace('テラスタイプ:','【テラスタイプ】\n').replace('対戦時限定技:','【当レイド限定】\n').replace('技:','【技】\n').replace('特性:','【特性】\n').replace('難易度:','【難易度】\n')
-        # print(f"refined output : {refined_pokemon_info}")
-        return refined_pokemon_info
+    if refined_pokemon_info:      
+        return refine_output(refined_pokemon_info,pokemon_info_keys)  
     else:
         return None
 
+def refine_output(pokemon_info,pokemon_info_keys):
+    refined_pokemon_info = ""
+    print(f"keys:{pokemon_info_keys}")
+    
+    refined_pokemon_info = pokemon_info.replace(', ','\n').replace('{','\n').replace('}','').replace('\'','').replace('対戦時限定技:','【当難易度(☆6)でのみ使用】\n')
+    for key in pokemon_info_keys:
+        refined_pokemon_info = refined_pokemon_info.replace(f"{key}:",f"【{key}】\n")
+    
+    #     .replace('Name:','【ポケモン名】\n') 
+    return refined_pokemon_info
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -111,6 +115,7 @@ def load_pokemon_raid_data(filename):
     try:
         with open(filename, newline="", encoding="utf-8") as csvfile:
             render = csv.DictReader(csvfile)
+            info_keys = render.fieldnames
             for row in render:
                 try:
                     pokemon_name = row["Name"].lower()
@@ -121,10 +126,10 @@ def load_pokemon_raid_data(filename):
     except FileNotFoundError:
         print(f"file not found: {e}")
     #print(f"Loaded{len(pokemon_data)} Pokemon. Details: {pokemon_data}")
-    return pokemon_data
+    return pokemon_data, info_keys
 
 
-pokemon_info = load_pokemon_raid_data("pokemon_6_star_raid_info_updated.csv")
+pokemon_info, pokemon_info_keys = load_pokemon_raid_data("pokemon_6_star_raid_info_updated.csv")
 
 
 token = os.getenv("OAK_BOT_TOKEN")
