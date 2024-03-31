@@ -1,9 +1,11 @@
 import os
 import csv
 import discord
+import jaconv
 from discord import Option
 from discord.ui import Select, Modal, InputText
 from discord.ext import commands
+
 
 # class DifficultySelect(Select):
 #     def __init__(self):
@@ -40,6 +42,7 @@ from discord.ext import commands
 #             await interaction.response.send_message("該当するポケモンが見つからなかったのだ")
 
 def find_pokemon_info(pokemon_name):
+    pokemon_name = jaconv.hira2kata(pokemon_name)
     refined_pokemon_info = ""
     for key, value in pokemon_info.items():
         if pokemon_name.lower() in key.lower():          
