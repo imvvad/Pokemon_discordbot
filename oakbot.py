@@ -45,10 +45,10 @@ def find_pokemon_info(pokemon_name):
     pokemon_name = jaconv.hira2kata(pokemon_name)
     refined_pokemon_info = ""
     for key, value in pokemon_info.items():
-        if pokemon_name.lower() in key.lower():          
+        if pokemon_name.lower() in key.lower():
             refined_pokemon_info += f"{value}"
-    if refined_pokemon_info:      
-        return refine_output(refined_pokemon_info,pokemon_info_keys)  
+    if refined_pokemon_info:
+        return refine_output(refined_pokemon_info,pokemon_info_keys)
     else:
         return None
 
