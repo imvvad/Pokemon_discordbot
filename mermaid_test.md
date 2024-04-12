@@ -17,8 +17,7 @@ erDiagram
         string name                     FK    "名前"
         string tera_type                FK    "テラスタイプ"
         int    difficulty                     "難易度"
-        string has_ability                    "通常特性があるか"
-        string has_hidden_ability             "隠れ特性があるか"
+        string ability                        "通常特性/夢特性/両方のどのパターンか"
         string normal_weapon1                 "技1"
         string normal_weapon2                 "技2"
         string normal_weapon3                 "技3"
@@ -28,20 +27,20 @@ erDiagram
     }
 
     pokemonInfo {
-        int pokemon_id                  PK    "ID"
+        int    pokemon_id               PK    "ID"
         string name                     PK    "名前"
         string type1                    FK    "タイプ1"
         string type2                    FK    "タイプ2"
         string ability                        "特性"
         string hidden_ability                 "隠れ特性"
-        string  base_stats                    "種族値"
+        string base_stats                     "種族値"
     }
 
-    Types {
-        int id                          PK    "ID"
-        varchar type                    PK    "タイプ"
-        string super_effective_type           "攻撃するとき効果抜群とれるタイプ"
-        string not_very_effective_type        "攻撃するとき効果はいまひとつになるタイプ"
-        string doesnt_affect                  "攻撃するとき効果がないタイプ"
+    pokemonTypes {
+        int     id                      PK    "ID"
+        varchar pokemon_type            PK    "タイプ"
+        string  super_effective_type           "攻撃するとき効果抜群とれるタイプ"
+        string  not_very_effective_type        "攻撃するとき効果はいまひとつになるタイプ"
+        string  doesnt_affect_type             "攻撃するとき効果がないタイプ"
     }
 ```
