@@ -6,41 +6,6 @@ from discord import Option
 from discord.ui import Select, Modal, InputText
 from discord.ext import commands
 
-
-# class DifficultySelect(Select):
-#     def __init__(self):
-#         options = [
-#             discord.SelectOption(label="⭐︎6"),
-#         ]
-#         super().__init__(
-#             placeholder="レイド難易度を選択するのだ",
-#             min_values=1,
-#             max_values=1,
-#             options=options,
-#         )
-
-#     async def callback(self, interaction: discord.Interaction):
-#         self.view.disable_all_items()
-#         modal = PokemonNameModal(title="レイドボスポケモン検索")
-#         await interaction.response.send_modal(modal)
-
-# class PokemonNameModal(Modal):
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.add_item(InputText(label="調べたいポケモンの名前を入力するのだ!"))
-
-#     async def callback(self, interaction: discord.Interaction):
-#         pokemon_name = self.children[0].value.lower()
-#         info = find_pokemon_info(pokemon_name)
-#         if info:
-#             print(f"検索対象： {pokemon_name} \n検索結果： {info}")
-#             await interaction.response.send_message(
-#                 f"検索対象： {pokemon_name} \n検索結果：{info}"
-#             )
-#         else:
-#             print(f"pokemon not found.")
-#             await interaction.response.send_message("該当するポケモンが見つからなかったのだ")
-
 def find_pokemon_info(pokemon_name):
     pokemon_name = jaconv.hira2kata(pokemon_name)
     refined_pokemon_info = ""
@@ -87,7 +52,7 @@ async def hello(
 )
 async def raid(
     ctx: discord.ApplicationContext,
-    pokename: Option(str, required=True, description="検索したいポケモンの名前を入力するのだ"),
+    pokename: Option(str, required=True, description="検索したいポケモンの名前を入力するのだ")
     #difficulty: Option(str, required=Flase, description="レイドの難易度を入力するのだ")
 ):
     print(f"/raid command called inputs:{pokename}")
