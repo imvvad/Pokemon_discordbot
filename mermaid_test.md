@@ -17,13 +17,9 @@ erDiagram
         string name                     FK    "名前"
         string tera_type                FK    "テラスタイプ"
         int    difficulty                     "難易度"
-        string ability                        "通常特性/夢特性/両方のどのパターンか"
-        string normal_weapon1                 "技1"
-        string normal_weapon2                 "技2"
-        string normal_weapon3                 "技3"
-        string normal_weapon4                 "技4"
-        string limited_weapon1                "レイド限定技1"
-        string limited_weapon2                "レイド限定技2"
+        array  ability                        "通常特性/夢特性/両方のどのパターンか"
+        array  weapons                        "技の配列"
+        array  limited_weapons                "レイド限定技の配列"
     }
 
     pokemonInfo {
