@@ -7,19 +7,21 @@
 title: "oakbot.db"
 ---
 erDiagram
-    input_tera_type_and_name ||--o| raidInfo    : ""
-    raidInfo                 ||--o| pokemonInfo : ""
-    raidInfo                 ||--o| Types       : ""
-    pokemonInfo              ||--|| Types       : ""
+    input_tera_type_and_name            ||--o| raidInfo                 : ""
+    raidInfo                            ||--o| pokemonInfo              : ""
+    raidInfo                            ||--|| raidInfo_pokemonAbilities: ""
+    raidInfo_pokemonAbilities           ||--|| pokemonAbilities         : ""
+    pokemonInfo                         ||--|| pokemonInfo_pokemonAbilities: ""
+    pokemonInfo_pokemonAbilities        ||--|| pokemonAbilities         : ""
+    raidInfo                            ||--|| pokemonTypes             : ""
+    raidInfo                            ||--|| raidInfo_pokemonWeapons  : ""
+    raidInfo_pokemonWeapons             ||--|| pokemonWeapons           : ""
 
     raidInfo {
-        int    raid_id                  PK    "ID"
+        int    id                       PK    "ID"
         string name                     FK    "名前"
         string tera_type                FK    "テラスタイプ"
         int    difficulty                     "難易度"
-        array  ability                        "通常特性/夢特性/両方のどのパターンか"
-        array  weapons                        "技の配列"
-        array  limited_weapons                "レイド限定技の配列"
     }
 
     pokemonInfo {
@@ -34,9 +36,41 @@ erDiagram
 
     pokemonTypes {
         int     id                      PK    "ID"
-        varchar pokemon_type            PK    "タイプ"
+        varchar name                          "タイプ"
         string  super_effective_type           "攻撃するとき効果抜群とれるタイプ"
         string  not_very_effective_type        "攻撃するとき効果はいまひとつになるタイプ"
         string  doesnt_affect_type             "攻撃するとき効果がないタイプ"
+    }
+
+    pokemonAbilities {
+        int     id                      PK    "ID"
+        varchar name                          "特性名"
+        string  description                   "特性の詳細"
+    }
+
+    pokemonWeapons {
+        int     id                      PK    "ID"
+        varchar name                          "技名"
+        string  description                   "技の詳細"
+    }
+
+    raidInfo_pokemonAbilities{
+        int id                PK "ID"
+        int raid_id           FK "raidID"
+        int ability_id        FK "abilityID"
+    }
+
+    pokemonInfo_pokemonAbilities{
+        int id                PK "ID"
+        int pokemon_id        FK "pokemonID"
+        int ability_id        FK "abilityID"
+        int hidden_ability_id FK "abilityID"
+    }
+
+    raidInfo_pokemonWeapons{
+        int id                  PK "ID"
+        int raid_id             FK "raidID"
+        int weapon_id           FK "weaponID"
+        int limited_weapons_id  FK "weaponID"
     }
 ```
