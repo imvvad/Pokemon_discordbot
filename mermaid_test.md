@@ -7,39 +7,29 @@
 title: "oakbot.db"
 ---
 erDiagram
-    input_tera_type_and_name            ||--o| raidInfo                 : ""
-    raidInfo                            ||--o| pokemonInfo              : ""
-    raidInfo                            ||--|| raidInfo_pokemonAbilities: ""
-    raidInfo_pokemonAbilities           ||--|| pokemonAbilities         : ""
-    pokemonInfo                         ||--|| pokemonInfo_pokemonAbilities: ""
-    pokemonInfo_pokemonAbilities        ||--|| pokemonAbilities         : ""
-    raidInfo                            ||--|| pokemonTypes             : ""
-    raidInfo                            ||--|| raidInfo_pokemonWeapons  : ""
-    raidInfo_pokemonWeapons             ||--|| pokemonWeapons           : ""
+    input_tera_type_and_name            ||--o| raidInfo                     : ""
+    raidInfo                            ||--o| pokemonInfo                  : ""
+    raidInfo                            ||--|| raidInfo_pokemonAbilities    : ""
+    raidInfo_pokemonAbilities           ||--|| pokemonAbilities             : ""
+    pokemonInfo                         ||--|| pokemonInfo_pokemonAbilities : ""
+    pokemonInfo_pokemonAbilities        ||--|| pokemonAbilities             : ""
+    raidInfo                            ||--|| raidInfo_pokemonWeapons      : ""
+    raidInfo_pokemonWeapons             ||--|| pokemonWeapons               : ""
+    raidInfo                            ||--|| raidInfo_pokemonLimitedWeapons      : ""
+    raidInfo_pokemonLimitedWeapons      ||--|| pokemonWeapons               : ""
 
     raidInfo {
         int    id                       PK    "ID"
         string name                     FK    "名前"
-        string tera_type                FK    "テラスタイプ"
         int    difficulty                     "難易度"
     }
 
     pokemonInfo {
         int    pokemon_id               PK    "ID"
-        string name                     PK    "名前"
-        string type1                    FK    "タイプ1"
-        string type2                    FK    "タイプ2"
-        string ability                        "特性"
-        string hidden_ability                 "隠れ特性"
+        string name                           "名前"
+        string type1                          "タイプ1"
+        string type2                          "タイプ2"
         string base_stats                     "種族値"
-    }
-
-    pokemonTypes {
-        int     id                      PK    "ID"
-        varchar name                          "タイプ"
-        string  super_effective_type           "攻撃するとき効果抜群とれるタイプ"
-        string  not_very_effective_type        "攻撃するとき効果はいまひとつになるタイプ"
-        string  doesnt_affect_type             "攻撃するとき効果がないタイプ"
     }
 
     pokemonAbilities {
@@ -71,6 +61,11 @@ erDiagram
         int id                  PK "ID"
         int raid_id             FK "raidID"
         int weapon_id           FK "weaponID"
+    }
+
+    raidInfo_pokemonLimitedWeapons{
+        int id                  PK "ID"
+        int raid_id             FK "raidID"
         int limited_weapons_id  FK "weaponID"
     }
 ```
