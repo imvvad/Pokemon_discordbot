@@ -1,2 +1,6 @@
 py-cord
 jaconv
+mysql 8.0
+sqlalchemy
+python-dotenv
+pandas
